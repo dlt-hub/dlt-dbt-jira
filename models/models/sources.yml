@@ -1,0 +1,366 @@
+version: 2
+sources:
+  - name: raw_data
+    schema: '{{ var ("source_dataset_name") }}'
+    tables:
+      - name: _dlt_loads
+      - name: issues
+      - name: users
+      - name: workflows
+      - name: projects
+      - name: issues__transitions
+      - name: issues__operations__link_groups
+      - name: issues__operations__link_groups__groups
+      - name: issues__operations__link_groups__links
+      - name: issues__changelog__histories
+      - name: issues__changelog__histories__items
+      - name: projects__issue_types
+      - name: projects__project_keys
+  - name: transformed_data
+    schema: '{{ var ("destination_dataset_name") }}'
+    tables:
+      - name: dlt_processed_load_ids
+
+models:
+      - name: dlt_processed_load_ids
+        description: "This table contains all processed load ids for incremental loading"
+      - name: _dlt_loads
+        description: "Created by DLT. Tracks completed loads"
+        columns:
+          - name: load_id
+            tests:
+              - not_null
+          - name: schema_name
+          - name: status
+            tests:
+              - not_null
+          - name: inserted_at
+            tests:
+              - not_null
+          - name: schema_version_hash
+      - name: issues
+        columns:
+          - name: expand
+          - name: id
+          - name: self
+          - name: key
+          - name: changelog__start_at
+          - name: changelog__max_results
+          - name: changelog__total
+          - name: fields__statuscategorychangedate
+          - name: fields__issuetype__self
+          - name: fields__issuetype__id
+          - name: fields__issuetype__description
+          - name: fields__issuetype__icon_url
+          - name: fields__issuetype__name
+          - name: fields__issuetype__subtask
+          - name: fields__issuetype__avatar_id
+          - name: fields__issuetype__entity_id
+          - name: fields__issuetype__hierarchy_level
+          - name: fields__project__self
+          - name: fields__project__id
+          - name: fields__project__key
+          - name: fields__project__name
+          - name: fields__project__project_type_key
+          - name: fields__project__simplified
+          - name: fields__project__avatar_urls
+          - name: fields__workratio
+          - name: fields__issuerestriction__issuerestrictions
+          - name: fields__issuerestriction__should_display
+          - name: fields__watches__self
+          - name: fields__watches__watch_count
+          - name: fields__watches__is_watching
+          - name: fields__created
+          - name: fields__priority__self
+          - name: fields__priority__icon_url
+          - name: fields__priority__name
+          - name: fields__priority__id
+          - name: fields__customfield_10018__has_epic_link_field_dependency
+          - name: fields__customfield_10018__show_field
+          - name: fields__customfield_10018__non_editable_reason
+          - name: fields__customfield_10019
+          - name: fields__updated
+          - name: fields__status__self
+          - name: fields__status__description
+          - name: fields__status__icon_url
+          - name: fields__status__name
+          - name: fields__status__id
+          - name: fields__status__status_category
+          - name: fields__summary
+          - name: fields__creator__self
+          - name: fields__creator__account_id
+          - name: fields__creator__email_address
+          - name: fields__creator__avatar_urls
+          - name: fields__creator__display_name
+          - name: fields__creator__active
+          - name: fields__creator__time_zone
+          - name: fields__creator__account_type
+          - name: fields__reporter__self
+          - name: fields__reporter__account_id
+          - name: fields__reporter__email_address
+          - name: fields__reporter__avatar_urls
+          - name: fields__reporter__display_name
+          - name: fields__reporter__active
+          - name: fields__reporter__time_zone
+          - name: fields__reporter__account_type
+          - name: fields__aggregateprogress__progress
+          - name: fields__aggregateprogress__total
+          - name: fields__progress__progress
+          - name: fields__progress__total
+          - name: fields__comment__comments
+          - name: fields__comment__self
+          - name: fields__comment__max_results
+          - name: fields__comment__total
+          - name: fields__comment__start_at
+          - name: fields__votes__self
+          - name: fields__votes__votes
+          - name: fields__votes__has_voted
+          - name: fields__worklog__start_at
+          - name: fields__worklog__max_results
+          - name: fields__worklog__total
+          - name: fields__worklog__worklogs
+          - name: _dlt_load_id
+            tests:
+              - not_null
+          - name: _dlt_id
+            tests:
+              - not_null
+              - unique
+          - name: fields__parent__id
+          - name: fields__parent__key
+          - name: fields__parent__self
+          - name: fields__parent__fields
+          - name: fields__resolution__self
+          - name: fields__resolution__id
+          - name: fields__resolution__description
+          - name: fields__resolution__name
+          - name: fields__customfield_10027
+          - name: fields__resolutiondate
+          - name: fields__last_viewed
+          - name: fields__customfield_10017
+          - name: fields__customfield_10015
+          - name: fields__duedate
+          - name: fields__description__type
+          - name: fields__description__version
+          - name: fields__description__content
+      - name: users
+        columns:
+          - name: self
+          - name: account_id
+          - name: account_type
+          - name: email_address
+          - name: avatar_urls___48x48
+          - name: avatar_urls___24x24
+          - name: avatar_urls___16x16
+          - name: avatar_urls___32x32
+          - name: display_name
+          - name: active
+          - name: locale
+          - name: _dlt_load_id
+            tests:
+              - not_null
+          - name: _dlt_id
+            tests:
+              - not_null
+              - unique
+      - name: workflows
+        columns:
+          - name: id__name
+          - name: id__entity_id
+          - name: description
+          - name: created
+          - name: updated
+          - name: _dlt_load_id
+            tests:
+              - not_null
+          - name: _dlt_id
+            tests:
+              - not_null
+              - unique
+      - name: projects
+        columns:
+          - name: expand
+          - name: self
+          - name: id
+          - name: key
+          - name: description
+          - name: lead__self
+          - name: lead__account_id
+          - name: lead__account_type
+          - name: lead__avatar_urls___48x48
+          - name: lead__avatar_urls___24x24
+          - name: lead__avatar_urls___16x16
+          - name: lead__avatar_urls___32x32
+          - name: lead__display_name
+          - name: lead__active
+          - name: name
+          - name: avatar_urls___48x48
+          - name: avatar_urls___24x24
+          - name: avatar_urls___16x16
+          - name: avatar_urls___32x32
+          - name: project_type_key
+          - name: simplified
+          - name: style
+          - name: is_private
+          - name: permissions__can_edit
+          - name: entity_id
+          - name: uuid
+          - name: insight__total_issue_count
+          - name: insight__last_issue_update_time
+          - name: _dlt_load_id
+            tests:
+              - not_null
+          - name: _dlt_id
+            tests:
+              - not_null
+              - unique
+      - name: issues__transitions
+        columns:
+          - name: id
+          - name: name
+          - name: to__self
+          - name: to__description
+          - name: to__icon_url
+          - name: to__name
+          - name: to__id
+          - name: to__status_category
+          - name: has_screen
+          - name: is_global
+          - name: is_initial
+          - name: is_available
+          - name: is_conditional
+          - name: is_looped
+          - name: _dlt_parent_id
+            tests:
+              - not_null
+          - name: _dlt_list_idx
+            tests:
+              - not_null
+          - name: _dlt_id
+            tests:
+              - not_null
+              - unique
+      - name: issues__operations__link_groups
+        columns:
+          - name: id
+          - name: _dlt_parent_id
+            tests:
+              - not_null
+          - name: _dlt_list_idx
+            tests:
+              - not_null
+          - name: _dlt_id
+            tests:
+              - not_null
+              - unique
+      - name: issues__operations__link_groups__groups
+        columns:
+          - name: id
+          - name: weight
+          - name: links
+          - name: groups
+          - name: _dlt_parent_id
+            tests:
+              - not_null
+          - name: _dlt_list_idx
+            tests:
+              - not_null
+          - name: _dlt_id
+            tests:
+              - not_null
+              - unique
+          - name: header
+      - name: issues__operations__link_groups__links
+        columns:
+          - name: id
+          - name: style_class
+          - name: icon_class
+          - name: label
+          - name: title
+          - name: href
+          - name: weight
+          - name: _dlt_parent_id
+            tests:
+              - not_null
+          - name: _dlt_list_idx
+            tests:
+              - not_null
+          - name: _dlt_id
+            tests:
+              - not_null
+              - unique
+      - name: issues__changelog__histories
+        columns:
+          - name: id
+          - name: author__self
+          - name: author__account_id
+          - name: author__email_address
+          - name: author__avatar_urls
+          - name: author__display_name
+          - name: author__active
+          - name: author__time_zone
+          - name: author__account_type
+          - name: created
+          - name: _dlt_parent_id
+            tests:
+              - not_null
+          - name: _dlt_list_idx
+            tests:
+              - not_null
+          - name: _dlt_id
+            tests:
+              - not_null
+              - unique
+      - name: issues__changelog__histories__items
+        columns:
+          - name: field
+          - name: fieldtype
+          - name: field_id
+          - name: to
+          - name: to_string
+          - name: _dlt_parent_id
+            tests:
+              - not_null
+          - name: _dlt_list_idx
+            tests:
+              - not_null
+          - name: _dlt_id
+            tests:
+              - not_null
+              - unique
+          - name: to_string__v_text
+          - name: from
+          - name: from_string
+      - name: projects__issue_types
+        columns:
+          - name: self
+          - name: id
+          - name: description
+          - name: icon_url
+          - name: name
+          - name: subtask
+          - name: avatar_id
+          - name: hierarchy_level
+          - name: _dlt_parent_id
+            tests:
+              - not_null
+          - name: _dlt_list_idx
+            tests:
+              - not_null
+          - name: _dlt_id
+            tests:
+              - not_null
+              - unique
+      - name: projects__project_keys
+        columns:
+          - name: value
+          - name: _dlt_parent_id
+            tests:
+              - not_null
+          - name: _dlt_list_idx
+            tests:
+              - not_null
+          - name: _dlt_id
+            tests:
+              - not_null
+              - unique

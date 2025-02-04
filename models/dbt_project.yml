@@ -1,0 +1,29 @@
+name: 'jira_pipeline'
+
+config-version: 2
+version: '0.1'
+
+profile: 'jira_pipeline'
+
+model-paths: ["models"]
+test-paths: ["tests"]
+analysis-paths: ["analysis"]
+macro-paths: ["macros"]
+
+target-path: "target"
+clean-targets:
+    - "target"
+    - "dbt_modules"
+    - "logs"
+
+require-dbt-version: [">=1.0.0", "<2.0.0"]
+
+models:
+  jira_pipeline:
+    materialized: table
+    staging:
+      materialized: view
+      +docs:
+        node_color: 'silver'
+    +docs:
+      node_color: 'gold'

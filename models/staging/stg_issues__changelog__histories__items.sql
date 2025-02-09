@@ -13,14 +13,14 @@ SELECT
     field,
     fieldtype,
     field_id,
-    to,
+    "to",
     to_string,
     _dlt_parent_id,
     _dlt_list_idx,
     _dlt_id,
     to_string__v_text,
-    from,
-    from_string,
+    "from",  -- Ensure "from" is properly quoted as it's a reserved keyword
+    from_string
 FROM {{ source('raw_data', 'issues__changelog__histories__items') }}
 
 /* we only load table items if the parent table has the parent item */

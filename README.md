@@ -26,7 +26,7 @@ This package is perfect for dbt users who want to integrate Jira data into their
    pip install dlt
    ```
 2. **Configure the Pipeline:**
-   Follow the dlt Jira [pipeline documentation](https://dlthub.com/docs/dlt-ecosystem/verified-sources/jira) to set up your pipeline. Ensure you have your Jira API key and destination credentials configured.
+   Follow the dlt [Jira pipeline documentation](https://dlthub.com/docs/dlt-ecosystem/verified-sources/jira) to set up your pipeline. Ensure you have your Jira API key and destination credentials configured.
 
 3. **Run the Pipeline:**
    Extract and load data from Jira into your data warehouse by running the pipelines.
@@ -57,9 +57,22 @@ dbt_jira_pipeline/
 │   │   ├── dim_projects.sql
 │   │   ├── dim_users.sql
 │   │   ├── dim_workflows.sql
-│   ├── staging/ # Same models as marts with prefix `stg`
+│   ├── staging/
+│   │   ├── stg__dlt_loads.sql
+│   │   ├── stg_issues__changelog__histories__items.sql
+│   │   ├── stg_issues__changelog__histories.sql
+│   │   ├── stg_issues__operations__link_groups__groups.sql
+│   │   ├── stg_issues__operations__link_groups__links.sql
+│   │   ├── stg_issues__operations__link_groups.sql
+│   │   ├── stg_issues__transitions.sql
+│   │   ├── stg_issues.sql
+│   │   ├── stg_projects__issue_types.sql
+│   │   ├── stg_projects__project_keys.sql
+│   │   ├── stg_projects.sql
+│   │   ├── stg_users.sql
+│   │   ├── stg_workflows.sql
 │   ├── dlt_active_load_ids.sql  # Used for incremental processing of data
-│   └── dlt_processed_load_ids.sql  # Used for incremental processing of data
+│   ├── dlt_processed_load_ids.sql  # Used for incremental processing of data
 ├── tests/
 ├── dbt_project.yml
 └── requirements.txt
@@ -100,7 +113,7 @@ for data model which can be further modified as required.
 #### Optional: Advanced Usage (Generator and Licensing)
 
 This package was created using the dlt-dbt-generator by dlt-plus. For more information about dlt-plus, refer to the 
-[dlt-plus documentation.](https://dlt-plus.netlify.app/docs/plus/intro/).To learn more about the dlt-dbt-generator, 
+[dlt-plus documentation](https://dlt-plus.netlify.app/docs/plus/intro/).To learn more about the dlt-dbt-generator, 
 consult the [dlt-dbt-generator](https://dlthub.com/blog/dbt-gen) documentation.
 
 > The dimensional modelling part of the package was created with a declarative code generator and suffers from 

@@ -113,7 +113,7 @@ for data model which can be further modified as required.
 #### Optional: Advanced Usage (Generator and Licensing)
 
 This package was created using the dlt-dbt-generator by dlt-plus. For more information about dlt-plus, refer to the 
-[dlt-plus documentation](https://dlt-plus.netlify.app/docs/plus/intro/).To learn more about the dlt-dbt-generator, 
+[dlt-plus documentation](https://dlt-plus.netlify.app/docs/plus/intro/). To learn more about the dlt-dbt-generator, 
 consult the [dlt-dbt-generator](https://dlthub.com/blog/dbt-gen) documentation.
 
 > The dimensional modelling part of the package was created with a declarative code generator and suffers from 
